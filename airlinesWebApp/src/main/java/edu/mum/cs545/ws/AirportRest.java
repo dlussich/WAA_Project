@@ -4,8 +4,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.MediaType;
 
 import cs545.airline.model.Airport;
 import cs545.airline.model.Flight;
@@ -22,39 +28,28 @@ public class AirportRest {
 		airportService.create(airport);
 	}
 
+	@Path("/")
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
 	public void delete(Airport airport) {
 		airportService.delete(airport);
 	}
 
+	@Path("/")
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Airport update(Airport airport) {
 		return airportService.update(airport);
-	}
-		
-	public Airport find(Airport airport) {
-		return airportService.find(airport);
 	}
 
 	public Airport findByCode(String airportcode) {
 		return airportService.findByCode(airportcode);
 	}
-
-	public List<Airport> findByArrival(Flight flight) {
-		return airportService.findByArrival(flight);
-	}
-
-	public List<Airport> findByDeparture(Flight flight) {
-		return airportService.findByDeparture(flight);
-	}
-
-	public List<Airport> findByCity(String city) {
-		return airportService.findByCity(city);
-	}
-
-	public List<Airport> findByCountry(String country) {
-		return airportService.findByCountry(country);
-	}
-
-	public List<Airport> findByName(String name) {
+	
+	@Path("/{name}")
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<Airport> getAirportByName(@PathParam("name") String name) {
 		return airportService.findByName(name);
 	}
 

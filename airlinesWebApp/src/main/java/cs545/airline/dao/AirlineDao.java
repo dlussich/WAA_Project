@@ -6,7 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+
 
 import cs545.airline.model.Airline;
 import edu.mum.gf.workaround.JpaUtil;

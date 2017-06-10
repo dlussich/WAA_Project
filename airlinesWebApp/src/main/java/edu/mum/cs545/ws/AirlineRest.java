@@ -4,7 +4,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -21,21 +25,28 @@ public class AirlineRest {
 	@Inject
 	private AirlineService airlineService;
 	
-	public void create(Airline airport) {
-		airlineService.create(airport);
+	@Path("/create")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void create(Airline airline) {
+		airlineService.create(airline);
 	}
 
-	public void delete(Airline airport) {
-		airlineService.delete(airport);
+	@Path("/")
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void delete(Airline airline) {
+		airlineService.delete(airline);
 	}
 
-	public Airline update(Airline airport) {
-		return airlineService.update(airport);
+	
+	@Path("/")
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Airline update(Airline airline) {
+		return airlineService.update(airline);
 	}
 
-	public Airline find(Airline airport) {
-		return airlineService.find(airport);
-	}
 	
 	@Path("/{name}")
 	@GET
@@ -44,13 +55,9 @@ public class AirlineRest {
 		return airlineService.findByName(name);
 	}
 
-	public List<Airline> findByFlight(Flight flight) {
-		return airlineService.findByFlight(flight);
-	}
-
 	@GET
-	public List<Airline> findAll() {
-		return airlineService.findAll();
+	public List<Airline> getAirlines() {
+		return airlineService.getAll();
 	}
 
 }

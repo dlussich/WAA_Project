@@ -2,10 +2,6 @@ package cs545.airline.service;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.ejb.EJB;
-import javax.ejb.SessionContext;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,7 +11,7 @@ import cs545.airline.dao.AirlineDao;
 import cs545.airline.model.Airline;
 import cs545.airline.model.Flight;
 
-@Named
+@Named("airlines")
 @ApplicationScoped
 @Transactional
 public class AirlineService {
@@ -50,7 +46,7 @@ public class AirlineService {
 		return airlineDao.findByFlight(flight.getId());
 	}
 
-	public List<Airline> findAll() {
+	public List<Airline> getAll() {
 		return airlineDao.findAll();
 	}
 }

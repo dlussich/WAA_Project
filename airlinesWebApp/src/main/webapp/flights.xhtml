@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Airlines</title>
+</h:head>
+<h:body>
+	
+	 <h:panelGrid>
+
+		<h:dataTable var="flight" value="#{flightService.flights}" border="2" padding="2">
+			<h:column>
+				<f:facet name="header"> Flight Nº  </f:facet>
+				<h:outputText value=" #{flight.flightnr} " />
+				
+			</h:column>
+			<h:column>
+				<f:facet name="header"> Airline </f:facet>
+				<h:outputText value=" #{flight.airline.name} " />
+				
+			</h:column>
+			<h:column>
+				<f:facet name="header"> Departure Date </f:facet>
+				<h:outputText value=" #{flight.departureDate} " />
+			</h:column>
+			<h:column>
+				<f:facet name="header"> Departure Time </f:facet>
+				<h:outputText value=" #{flight.departureTime} " />
+			</h:column>
+			<h:column>
+				<f:facet name="header"> Origin </f:facet>
+				<h:outputText value=" #{flight.origin.airportcode}/ #{flight.origin.city}/ #{flight.origin.country} " />
+				
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header"> Arrival Date </f:facet>
+				<h:outputText value=" #{flight.arrivalDate} " />
+			</h:column>
+			<h:column>
+				<f:facet name="header"> Arrival Time </f:facet>
+				<h:outputText value=" #{flight.arrivalTime} " />
+			</h:column>
+			<h:column>
+				<f:facet name="header"> Destination </f:facet>
+				<h:outputText value=" #{flight.destination.airportcode}/ #{flight.destination.city}/ #{flight.destination.country} " />
+				
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header"> Airplane </f:facet>
+				<h:outputText value=" #{flight.airplane.serialnr}/ #{flight.airplane.model} " />
+				
+			</h:column>
+			
+		</h:dataTable>
+	</h:panelGrid>
+
+</h:body>
+</html>

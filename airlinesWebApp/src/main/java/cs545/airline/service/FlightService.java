@@ -1,5 +1,6 @@
 package cs545.airline.service;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -14,11 +15,11 @@ import cs545.airline.model.Airplane;
 import cs545.airline.model.Airport;
 import cs545.airline.model.Flight;
 
-@Named
+@Named("flightService")
 @ApplicationScoped
 @Transactional
-public class FlightService {
-	
+public class FlightService{
+
 	@Inject
 	private FlightDao flightDao;
 	
@@ -76,7 +77,7 @@ public class FlightService {
 		return flightDao.findByDepartureBetween(datetimeFrom, datetimeFrom, datetimeTo, datetimeTo);
 	}
 
-	public List<Flight> findAll() {
+	public List<Flight> getFlights() {
 		return flightDao.findAll();
 	}
 

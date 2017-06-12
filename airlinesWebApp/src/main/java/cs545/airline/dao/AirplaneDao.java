@@ -5,6 +5,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import cs545.airline.model.Airplane;
@@ -20,15 +21,26 @@ public class AirplaneDao {
 	private EntityManager entityManager = JpaUtil.getEntityManager();
 	
 	public void create(Airplane airplane) {
+		EntityTransaction transaction=entityManager.getTransaction();
+		transaction.begin();
 		entityManager.persist(airplane);
+		transaction.commit();
 	}
 
 	public Airplane update(Airplane airplane) {
-		return entityManager.merge(airplane);
+		EntityTransaction transaction=entityManager.getTransaction();
+		transaction.begin();
+		Airplane airplaneUpdate = entityManager.merge(airplane);
+		transaction.commit();
+		return airplaneUpdate;
+		
 	}
 
 	public void delete(Airplane airplane) {
+		EntityTransaction transaction=entityManager.getTransaction();
+		transaction.begin();
 		entityManager.remove(airplane);
+		transaction.commit();
 	}
 
 	public Airplane findOne(long id) {

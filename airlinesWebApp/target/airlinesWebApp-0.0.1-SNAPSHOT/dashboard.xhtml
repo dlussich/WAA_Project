@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Pizza Order</title>
+	<h:outputStylesheet name="css/stylesheet.css" />
+</h:head>
+<h:body>
+	<div id="page">
+		<div id="customer-container">
+			<ui:insert name="filters">
+				<ui:include src="/parts/filters.xhtml" />
+			</ui:insert>
+		</div>
+		<div id="pizza-container">
+			<ui:insert name="flights">
+				<ui:include src="/parts/flights.xhtml" />
+			</ui:insert>
+		</div>
+		<!-- <div id="action-container">
+			<ui:insert name="orderActions">
+				<ui:include src="/templates/parts/pizzaActions.xhtml" />
+			</ui:insert>
+		</div> -->
+	</div>
+</h:body>
+</html>

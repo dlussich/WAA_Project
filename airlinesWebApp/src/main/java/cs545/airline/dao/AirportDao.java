@@ -5,6 +5,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import cs545.airline.model.Airport;
@@ -20,16 +21,26 @@ public class AirportDao {
 	private EntityManager entityManager = JpaUtil.getEntityManager();
 	
 	public void create(Airport airport) {
+		EntityTransaction transaction=entityManager.getTransaction();
+		transaction.begin();
 		entityManager.persist(airport);
+		transaction.commit();
 	}
 
 	public Airport update(Airport airport) {
-
-		return entityManager.merge(airport);
+		EntityTransaction transaction=entityManager.getTransaction();
+		transaction.begin();
+		Airport airportUp = entityManager.merge(airport);
+		transaction.commit();
+		return airportUp;
+		
 	}
 
 	public void delete(Airport airport) {
+		EntityTransaction transaction=entityManager.getTransaction();
+		transaction.begin();
 		entityManager.remove(airport);
+		transaction.commit();
 	}
 
 	public Airport findOne(long id) {

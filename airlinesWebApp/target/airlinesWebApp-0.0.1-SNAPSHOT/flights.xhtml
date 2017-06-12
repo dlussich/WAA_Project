@@ -11,31 +11,35 @@
 </h:head>
 <h:body>
 		<h1> Flights Time Table </h1>
-		<h:panelGrid>
 		<h:form>
-			
-			<h:outputLabel> Airline: </h:outputLabel>
+			<h:tableData>
+			<h:column>
+			<f:facet name="header"> Airline </f:facet>
 			<h:selectOneMenu  binding="#{airline}">
 				<f:selectItems value="#{airlines.all}" />
 			</h:selectOneMenu>
-	
-			<h:outputLabel> Origin: </h:outputLabel>
+			</h:column>
+			<h:column>
+			<f:facet name="header"> Origin </f:facet>
 			<h:selectOneMenu binding="#{origin}">
 				<f:selectItems value="#{airports.all}" />
 			</h:selectOneMenu>
-			<h:outputLabel> Destination: </h:outputLabel>
+			</h:column>
+			<h:column>
+			<f:facet name="header"> Destination </f:facet>
 			<h:selectOneMenu binding="#{destination}">
 				<f:selectItems value="#{airports.all}" />
 			</h:selectOneMenu>
+			</h:column>
+			<f:facet name="footer">
 			 <h:commandButton action="#{manager.filterFlights(airline.value, origin.value,destination.value)}" value="Search"></h:commandButton>
-			
+			</f:facet>
+		</h:tableData>
 		</h:form>
-		</h:panelGrid>
-		<h:panelGrid>
 		<h:form>
 			<h:dataTable id="timeTable" var="flight" value="#{manager.filteredFlights}" border="2" padding="2">
 			<h:column>
-				<f:facet name="header"> Flight Nº  </f:facet>
+				<f:facet name="header"> Flight nº  </f:facet>
 				<h:outputText value=" #{flight.flightnr} " />
 				
 			</h:column>
@@ -81,6 +85,6 @@
 		</h:dataTable>
 			
 	</h:form>
-	</h:panelGrid>
+		
 </h:body>
 </html>

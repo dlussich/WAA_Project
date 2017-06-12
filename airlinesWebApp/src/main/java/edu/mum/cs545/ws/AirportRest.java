@@ -1,62 +1,88 @@
 package edu.mum.cs545.ws;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.core.MediaType;
-
 import cs545.airline.model.Airport;
-import cs545.airline.model.Flight;
 import cs545.airline.service.AirportService;
+import cs545.airline.service.FlightService;
 
-@Named
 @Path("airport")
 public class AirportRest {
-	
 	@Inject
 	private AirportService airportService;
-	
-	public void create(Airport airport) {
+	@Inject
+	private FlightService flightService;
+
+	@GET
+	@Path("/")
+	public List<Airport> getAirport() {
+		return airportService.getAll();
+	}
+
+	@POST
+	@Path("/")
+	public String createAirport(Airport airport) {
 		airportService.create(airport);
+		return "OK";
 	}
-
-	@Path("/")
+	
 	@DELETE
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void delete(Airport airport) {
-		airportService.delete(airport);
+	@Path("/{paramId}")
+	public String deleteAirport(@PathParam("paramId") Long id) {
+		System.out.println("Deleted Airport: " + id);
+		Airport airportDel = new Airport();
+		airportDel.setId(id);
+		airportService.delete(airportService.find(airportDel));
+		return "OK";
 	}
 
-	@Path("/")
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Airport update(Airport airport) {
-		return airportService.update(airport);
-	}
-
-	public Airport findByCode(String airportcode) {
-		return airportService.findByCode(airportcode);
+	@Path("/")
+	public String updateAirport(Airport airport) {
+		Airport objAir = airportService.find(airport);
+		objAir.setAirportcode(airport.getAirportcode());
+		objAir.setCity(airport.getCity());
+		objAir.setCountry(airport.getCountry());
+		objAir.setName(airport.getName());
+		airportService.update(objAir);
+		return "OK";
 	}
 	
-	@Path("/{name}")
 	@GET
-	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Airport> getAirportByName(@PathParam("name") String name) {
-		return airportService.findByName(name);
-	}
+	@Path("/{paramType}/{paramValue}")
+	public List<Airport> getAirportBy(@PathParam("paramType") String type, @PathParam("paramValue") String value) {
+		List<Airport> airport = new ArrayList<>();
 
-	
-	@GET
-	public List<Airport> findAll() {
-		return airportService.findAll();
+		switch (type) {
+		case "BYNAME":
+			airport = airportService.findByName(value);
+			break;
+		case "BYCODE":
+			airport.add(airportService.findByCode(value));
+			break;
+		case "BYCITY":
+			airport = airportService.findByCity(value);
+			break;
+		case "BYCOUNTRY":
+			airport = airportService.findByCountry(value);
+			break;
+		case "BYDEPARTURE":
+			airport = airportService.findByDeparture(flightService.findByNumber(value).get(0));
+			break;
+		case "BYARRIVAL":
+			airport = airportService.findByArrival(flightService.findByNumber(value).get(0));
+			break;
+		default:
+			airport = null;
+			break;
+		}
+		return airport;
 	}
-
 }

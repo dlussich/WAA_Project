@@ -6,6 +6,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
@@ -22,15 +23,25 @@ public class FlightDao {
 	private EntityManager entityManager = JpaUtil.getEntityManager();
 
 	public void create(Flight flight) {
+		EntityTransaction transaction=entityManager.getTransaction();
+		transaction.begin();
 		entityManager.persist(flight);
+		transaction.commit();
 	}
 
 	public Flight update(Flight flight) {
-		return entityManager.merge(flight);
+		EntityTransaction transaction=entityManager.getTransaction();
+		transaction.begin();
+		Flight flightUp = entityManager.merge(flight);
+		transaction.commit();
+		return flightUp;
 	}
 
 	public void delete(Flight flight) {
+		EntityTransaction transaction=entityManager.getTransaction();
+		transaction.begin();
 		entityManager.remove(flight);
+		transaction.commit();
 	}
 
 	public Flight findOne(long id) {
@@ -116,13 +127,18 @@ public class FlightDao {
 
 	@SuppressWarnings("unchecked")
 	public List<Flight> findByArrivalBetween(Date dateFrom, Date dateTo, Date timeFrom, Date timeTo) {
+		/*Query query = entityManager.createQuery(
+				"select distinct f from Flight f where f.arrivalDate between :arrivalDateFrom and :arrivalDateTo and f.arrivalTime between :arrivalTimeFrom and :arrivalTimeTo",
+				Flight.class);
+		*/
+		
 		Query query = entityManager.createQuery(
-				"select distinct f from Flight f where f.arrivalDate between :arrivalDateFrom and :arrivalDateTo and f.arrivalTime beteween :arrivalTimeFrom and :arrivalTimeTo",
+				"select distinct f from Flight f where f.arrivalDate between :arrivalDateFrom and :arrivalDateTo ",
 				Flight.class);
 		query.setParameter("arrivalDateFrom", dateFrom, TemporalType.DATE);
-		query.setParameter("arrivalTimeFrom", dateFrom, TemporalType.TIME);
-		query.setParameter("arrivalDateTo", dateTo, TemporalType.DATE);
-		query.setParameter("arrivalTimeTo", dateTo, TemporalType.TIME);
+		query.setParameter("arrivalDateTo", timeTo, TemporalType.DATE);
+		//query.setParameter("arrivalDateTo", dateTo, TemporalType.DATE);
+		//query.setParameter("arrivalTimeTo", dateTo, TemporalType.TIME);
 
 		return query.getResultList();
 	}

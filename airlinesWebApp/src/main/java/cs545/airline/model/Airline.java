@@ -68,4 +68,8 @@ public class Airline {
 		}
 		return success;
 	}
+	
+	public String toString(){
+		return name ;
+	}
 }

@@ -122,4 +122,8 @@ public class Airport {
 		}
 		return success;
 	}
+	
+	public String toString(){
+		return this.airportcode;
+	}
 }

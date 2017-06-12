@@ -11,7 +11,7 @@ import cs545.airline.dao.AirportDao;
 import cs545.airline.model.Airport;
 import cs545.airline.model.Flight;
 
-@Named
+@Named("airports")
 @ApplicationScoped
 @Transactional
 public class AirportService {
@@ -62,7 +62,7 @@ public class AirportService {
 		return airportDao.findByName(name);
 	}
 
-	public List<Airport> findAll() {
+	public List<Airport> getAll() {
 		return airportDao.findAll();
 	}
 }

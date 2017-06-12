@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://java.sun.com/jsf/passthrough">
+
+<h:head>
+	<title>airlines</title>
+</h:head>
+<h:body>
+	<ui:composition tempalate="dashboard.xhtml">
+		<h:form>
+		    <h:outputLabel>Date: </h:outputLabel>
+			<h:inputText id="date" p:type="date" binding="#{date}"/>
+			<h:outputLabel>Time: </h:outputLabel>
+			<h:inputText id="time" p:type="time" binding="#{time}"/>
+			<h:outputLabel>Airline: </h:outputLabel>
+			<h:selectOneMenu  binding="#{airline}">
+				<f:selectItems value="#{airlines.all}" />
+			</h:selectOneMenu><br/>
+			<h:outputLabel>Origin: </h:outputLabel>
+			<h:selectOneMenu binding="#{origin}">
+				<f:selectItems value="#{airports.all}" />
+			</h:selectOneMenu><br/>
+			<h:outputLabel>Destination: </h:outputLabel>
+			<h:selectOneMenu binding="#{destination}">
+				<f:selectItems value="#{airports.all}" />
+			</h:selectOneMenu><br/>
+			<h:commandButton action="#{manager.filterFlights(airline.value, origin.value,destination.value)}" value="Search"></h:commandButton>
+		
+		</h:form>
+	</ui:composition>
+
+		
+</h:body>
+</html>

@@ -1,62 +1,83 @@
 package edu.mum.cs545.ws;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+import javax.ws.rs.core.Response;
 import cs545.airline.model.Airplane;
-import cs545.airline.model.Flight;
 import cs545.airline.service.AirplaneService;
+import cs545.airline.service.FlightService;
 
-
-@Named
 @Path("airplane")
 public class AirplaneRest {
-	
+	@Inject
+	private FlightService flightService;
 	@Inject
 	private AirplaneService airplaneService;
 	
-	@Path("/")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void create(Airplane airplane) {
-		airplaneService.create(airplane);
-	}
 
-	@Path("/")
-	@DELETE
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void delete(Airplane airplane) {
-		airplaneService.delete(airplane);
-	}
-
-	@Path("/")
-	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Airplane update(Airplane airplane) {
-		return airplaneService.update(airplane);
-	}
-
-	@Path("/{serialno}")
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Airplane findBySrlnr(@PathParam("serialno") String serialno) {
-		return airplaneService.findBySrlnr(serialno);
+	@Path("/")
+	public List<Airplane> getAirlines() {
+		return airplaneService.findAll();
 	}
 	
+	@POST
+	@Path("/")
+	public String createAirplane(Airplane airplane) {
+		airplaneService.create(airplane);
+		return "OK";
+	}
+
+	@DELETE
+	@Path("/{paramId}")
+	public String deleteAirplane(@PathParam("paramId") Long id) {
+		System.out.println("Deleted Airplane: " + id);
+		Airplane airplane = new Airplane();
+		airplane.setId(id);
+		airplaneService.delete(airplaneService.find(airplane));
+		return "OK";
+	}
+	
+	@PUT
+	@Path("/")
+	public String updateAirplane(Airplane airplane) {
+		Airplane objAirplane = airplaneService.find(airplane);
+		objAirplane.setCapacity(airplane.getCapacity());
+		objAirplane.setModel(airplane.getModel());
+		objAirplane.setSerialnr(airplane.getSerialnr());
+		airplaneService.update(objAirplane);
+		return "OK";
+	}
+
 	@GET
-	public List<Airplane> findAll() {
-		return airplaneService.findAll();
+	@Path("/{paramType}/{paramValue}")
+	public List<Airplane> getAirplaneById(@PathParam("paramType") String type, @PathParam("paramValue") String value) {
+		List<Airplane> airplane = new ArrayList<>();
+
+		switch (type) {
+		case "SERIAL":
+			airplane.add(airplaneService.findBySrlnr(value));
+			break;
+
+		case "MODEL":
+			airplane = airplaneService.findByModel(value);
+			break;
+		case "FLIGHT":
+			airplane = airplaneService.findByFlight(flightService.findByNumber(value).get(0));
+			break;
+		default:
+			airplane = null;
+			break;
+		}
+		return airplane;
 	}
 
 }

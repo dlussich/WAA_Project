@@ -10,32 +10,12 @@
 	<title>airlines</title>
 </h:head>
 <h:body>
+	<ui:composition tempalate="dashboard.xhtml">
 		<h1> Flights Time Table </h1>
-		<h:panelGrid>
-		<h:form>
-			
-			<h:outputLabel> Airline: </h:outputLabel>
-			<h:selectOneMenu  binding="#{airline}">
-				<f:selectItems value="#{airlines.all}" />
-			</h:selectOneMenu>
-	
-			<h:outputLabel> Origin: </h:outputLabel>
-			<h:selectOneMenu binding="#{origin}">
-				<f:selectItems value="#{airports.all}" />
-			</h:selectOneMenu>
-			<h:outputLabel> Destination: </h:outputLabel>
-			<h:selectOneMenu binding="#{destination}">
-				<f:selectItems value="#{airports.all}" />
-			</h:selectOneMenu>
-			 <h:commandButton action="#{manager.filterFlights(airline.value, origin.value,destination.value)}" value="Search"></h:commandButton>
-			
-		</h:form>
-		</h:panelGrid>
-		<h:panelGrid>
 		<h:form>
 			<h:dataTable id="timeTable" var="flight" value="#{manager.filteredFlights}" border="2" padding="2">
 			<h:column>
-				<f:facet name="header"> Flight Nº  </f:facet>
+				<f:facet name="header"> Flight nº  </f:facet>
 				<h:outputText value=" #{flight.flightnr} " />
 				
 			</h:column>
@@ -81,6 +61,8 @@
 		</h:dataTable>
 			
 	</h:form>
-	</h:panelGrid>
+	</ui:composition>
+
+		
 </h:body>
 </html>

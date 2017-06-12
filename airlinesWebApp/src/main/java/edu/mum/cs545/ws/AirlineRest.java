@@ -53,10 +53,10 @@ public class AirlineRest {
 	public Airline getAirlineById(@PathParam("paramType") String type, @PathParam("paramValue") String value) {
 		Airline airline;
 		switch (type) {
-		case "BYID":
+		case "byid":
 			airline = airlineService.findById(Long.valueOf(value));
 			break;
-		case "BYNAME":
+		case "byname":
 			airline = airlineService.findByName(value);
 			break;
 		default:

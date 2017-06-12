@@ -61,22 +61,22 @@ public class AirportRest {
 		List<Airport> airport = new ArrayList<>();
 
 		switch (type) {
-		case "BYNAME":
-			airport = airportService.findByName(value);
-			break;
-		case "BYCODE":
+		case "bycode":
 			airport.add(airportService.findByCode(value));
 			break;
-		case "BYCITY":
+		case "byname":
+			airport = airportService.findByName(value);
+			break;
+		case "bycity":
 			airport = airportService.findByCity(value);
 			break;
-		case "BYCOUNTRY":
+		case "bycountry":
 			airport = airportService.findByCountry(value);
 			break;
-		case "BYDEPARTURE":
+		case "bydeparture":
 			airport = airportService.findByDeparture(flightService.findByNumber(value).get(0));
 			break;
-		case "BYARRIVAL":
+		case "byarrival":
 			airport = airportService.findByArrival(flightService.findByNumber(value).get(0));
 			break;
 		default:

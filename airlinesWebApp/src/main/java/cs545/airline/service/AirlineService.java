@@ -22,6 +22,8 @@ public class AirlineService {
 	@Inject
 	private AirlineDao airlineDao;
 	
+	private List<Flight> airlineFlights;
+	
 	public void create(Airline airport) {
 		airlineDao.create(airport);
 	}
@@ -53,4 +55,15 @@ public class AirlineService {
 	public List<Airline> getAll() {
 		return airlineDao.findAll();
 	}
+	
+	public List<Flight> showFlights(String id, String name){
+		Airline airline=findById(Long.parseLong(id));
+		airlineFlights=airline.getFlights();
+		return airlineFlights;
+	}
+	
+	public List<Flight> getAirlineFlights(){
+		return airlineFlights;
+	}
+	
 }

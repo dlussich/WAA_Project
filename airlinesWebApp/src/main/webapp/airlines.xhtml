@@ -10,22 +10,83 @@
 	<title>Airlines</title>
 </h:head>
 <h:body>
-	
+<h:panelGroup coulumns="2">
+    <h1> Airlines </h1>
+ 
+	<h:panelGrid >
 	<h:form>
-
-		<h:dataTable var="a" value="#{airlines.all}">
+		<h:dataTable var="a" value="#{airlines.all}" border="2" padding="2">
 			<h:column>
 				<f:facet name="header">Airline Id</f:facet>
-				<h:outputText value="#{a.id}" />
+				<h:outputText value="#{a.id}" binding="#{id}"/>
 				
 			</h:column>
 			<h:column>
 				<f:facet name="header">Name</f:facet>
-				<h:outputText value="#{a.name}" />
+				<h:outputText value="#{a.name}" binding="#{name}"/>
 			</h:column>
-			
+			<h:column>
+				<f:facet name="header">Actions</f:facet>
+				  <h:commandButton id="showFlights" value="Show Flights" action="#{airlines.showFlights(id.value,name.value)}"/>
+				  <!-- <f:ajax execute="@this" render=":airlineFlights"/> -->
+			</h:column>
 		</h:dataTable>
 	</h:form>
+</h:panelGrid>
 
+<h:panelGrid>
+	<h2> Airline Flights</h2>
+	<h:form>
+		<h:dataTable id="airlineFlights" var="f" value="#{airlines.airlineFlights}" border="2" padding="2">
+					<h:column>
+				<f:facet name="header"> Flight Nº  </f:facet>
+				<h:outputText value=" #{f.flightnr} " />
+				
+			</h:column>
+			<h:column>
+				<f:facet name="header"> Airline </f:facet>
+				<h:outputText value=" #{f.airline.name} " />
+				
+			</h:column>
+			<h:column>
+				<f:facet name="header"> Departure Date </f:facet>
+				<h:outputText value=" #{f.departureDate}  #{f.departureTime}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header"> Origin </f:facet>
+				<h:outputText value=" #{f.origin.airportcode}/ #{f.origin.name} " />
+				
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header"> Arrival Date </f:facet>
+				<h:outputText value=" #{f.arrivalDate}  #{f.arrivalTime}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header"> Destination </f:facet>
+				<h:outputText value=" #{f.destination.airportcode}/ #{f.destination.name} " />
+				
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header"> Airplane </f:facet>
+				<h:column>
+					<f:facet name="header"> Model </f:facet>
+				    <h:outputText value=" #{f.airplane.model} " />
+				
+			    </h:column>
+			    <h:column>
+					<f:facet name="header"> Capacity </f:facet>
+				    <h:outputText value=" #{f.airplane.capacity} " />
+				
+			    </h:column>  
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</h:panelGrid>
+</h:panelGroup>
+<br/>
+<br/>
+<a href="index.html"> &lt;&lt; Return </a>
 </h:body>
 </html>

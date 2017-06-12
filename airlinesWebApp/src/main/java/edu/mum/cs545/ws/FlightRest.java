@@ -77,26 +77,26 @@ public class FlightRest {
 		List<Flight> flight = new ArrayList<>();
 
 		switch (type) {
-		case "BYAIRPLANE":
-			flight = getFlightByAirplaneModel(value);
-			break;
-		case "BYARRDATE":
-			flight = findByArrivalDate(value);
-			break;
-		case "BYDEPDATE":
-			flight = findByDepartureDate(value);
-			break;
-		case "BYNUMBER":
-			flight = flightService.findByNumber(value);
-			break;
-		case "BYAIRLINE":
+		case "byairline":
 			flight = flightService.findByAirline(airlineService.findByName(value));
 			break;
-		case "BYORIGIN":
+		case "byarrdate":
+			flight = findByArrivalDate(value);
+			break;
+		case "bedepdate":
+			flight = findByDepartureDate(value);
+			break;
+		case "bynumber":
+			flight = flightService.findByNumber(value);
+			break;
+		case "byorigin":
 			flight = flightService.findByOrigin(airportService.findByCode(value));
 			break;
-		case "BYDESTINY":
+		case "bydestiny":
 			flight = flightService.findByDestination(airportService.findByCode(value));
+			break;
+		case "byairplane":
+			flight = getFlightByAirplaneModel(value);
 			break;
 		default:
 			flight = null;

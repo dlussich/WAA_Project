@@ -63,14 +63,13 @@ public class AirplaneRest {
 		List<Airplane> airplane = new ArrayList<>();
 
 		switch (type) {
-		case "SERIAL":
+		case "serial":
 			airplane.add(airplaneService.findBySrlnr(value));
 			break;
-
-		case "MODEL":
+		case "model":
 			airplane = airplaneService.findByModel(value);
 			break;
-		case "FLIGHT":
+		case "flight":
 			airplane = airplaneService.findByFlight(flightService.findByNumber(value).get(0));
 			break;
 		default:
